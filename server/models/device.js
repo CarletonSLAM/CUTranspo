@@ -133,10 +133,17 @@ function pollOCTranspo (stopNo, next) {
 
 function getTrips(route) {
   var trips = [];
-  if(route.Trips) {
-    route.Trips.forEach(function(trip) {
-      trips.push(trip.TripStartTime);
-    });
+
+  console.log(route);
+  if(typeof route.Trips === 'object') {
+    if (Array.isArray(route.Trips)) {
+      route.Trips.forEach(function(trip) {
+        trips.push(trip.TripStartTime);
+      });
+    }
+    else {
+      trips.push(route.Trips.TripStartTime);
+    }
   }
   return trips;
 }
