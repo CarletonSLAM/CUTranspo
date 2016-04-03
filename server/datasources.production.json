@@ -1,0 +1,11 @@
+{
+  "db": {
+    "name": "db",
+    "connector": "memory"
+  },
+  "mongodb": {
+     "defaultForType": "mongodb",
+     "connector": "loopback-connector-mongodb",
+     "url": "mongodb://localhost:27017/mydb"
+  }
+}

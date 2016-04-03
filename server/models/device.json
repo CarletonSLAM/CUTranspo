@@ -1,0 +1,31 @@
+{
+  "name": "Device",
+  "base": "User",
+  "idInjection": false,
+  "mongodb": {
+    "collection": "PostCollection"
+  },
+  "properties": {
+    "deviceName": {
+      "type": "string"
+    },
+    "stopNo": {
+      "type": "Number"
+    },
+    "requestHits": {
+      "type": "Number"
+    }
+  },
+  "hidden": ["email", "requestHits"],
+  "validations": [],
+  "relations": {},
+  "acls": [
+    {
+     "principalType": "ROLE",
+     "principalId": "$authenticated",
+     "permission": "ALLOW",
+     "property": "getTimes"
+   }
+  ],
+  "methods": {}
+}
