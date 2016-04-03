@@ -1,20 +1,22 @@
+#!/usr/bin/env python
 import urllib
 import urllib2
 import json
 from pprint import pprint
 import sched, time
-from subprocess import call
+from subprocess import Popen, PIPE
 import os
 import time
 
-deviceName = 'rpi'
-password = '1234'
+deviceName = 'rpiG'
+password = '12345'
 
 s = sched.scheduler(time.time, time.sleep)
+PROGRAM_PATH = os.getcwd() + '/display-text'
 
 try:
 	url = 'https://cu-transpo.herokuapp.com/api/Devices'
-	values = {'deviceName' : deviceName,'password' : password, 'stopNo' : '5813'}
+	values = {'deviceName' : deviceName,'password' : password, 'stopNo' : '3037'}
 	data = urllib.urlencode(values)
 	req = urllib2.Request(url, data)
 	print req
@@ -43,29 +45,32 @@ def getNextTimes(sc):
 	req_for_bus_timing = urllib2.Request('https://cu-transpo.herokuapp.com/api/Devices/getTimes?' + query)
 	bus_timings_response = urllib2.urlopen(req_for_bus_timing)
 	try:
-		decoded = json.loads(bus_timings_response.read())
-		destination_4 = decoded['response']['data']['4'][1]['dest']
-		times_4 = decoded['response']['data']['4'][1]['times']
+		decoded = json.loads(bus_timings_response.read())['response']['data']
+		
+		for key in decoded.keys().sorted():
+			print key
 
-		destination_104 = decoded['response']['data']['104'][1]['dest']
-		times_104 = decoded['response']['data']['104'][0]['times']
+		destination_87 = decoded['response']['data']['87'][1]['dest']
+		times_87 = decoded['response']['data']['87'][1]['times']
 
-		print "Bus: 4"
-		print "Destination: " + destination_4
+		print "Bus: 1"
+		print "Destination: " + destination_1
 		#print "Times: " + times_4
+		print "Bus: 87"
+		print "Desination: " + destination_87
 	except (ValueError, KeyError, TypeError):
 		print "JSON format error"
 
-	stream = os.popen(" ".join(["sudo ./test2", "200,10,0", "80", "\"4 " + destination_4+"\"","\"", times_4[0] + "   " + times_4[1] + "   " + times_4[2]+"\""]),"w")
-
-
+	stream = Popen(["sudo", PROGRAM_PATH, "200,10,0", "80", "1 " + destination_1, times_1[0] + "  " + times_1[1]], stdin=PIPE, stderr=PIPE, universal_newlines=True)
+	print stream
+	
 	time.sleep(5);
-	rc = stream.close()
-	if rc is not None and rc >> 8:
-		print "There were some errors"
-
-	stream = os.popen(" ".join(["sudo ./test2", "200,10,0", "80", "\"104 " + destination_104+"\"","\"", times_104[0] + "   " + times_104[1] + "   " + times_104[2]+"\""]),"w")
-
-
-s.enter(10, 1, getNextTimes, (s,))
-s.run()
+	print stream.terminate()
+	#if rc is not None and rc >> 8:
+	#	print "There were some errors"
+	stream = Popen(["sudo", PROGRAM_PATH, "200,10,0", "80", "87 " + destination_87, times_87[0] + "  " + times_87[1]], stdin=PIPE, stderr=PIPE, universal_newlines=True)
+	time.sleep(5)
+	print stream.terminate()
+	s.enter(0.05, 1,getNextTimes, (s,))
+	s.run()	
+getNextTimes(s)

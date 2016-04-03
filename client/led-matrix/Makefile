@@ -1,7 +1,7 @@
 \CXXFLAGS=-Wall -O3 -g
-OBJECTS=demo-main.o led-image-viewer.o display-text.o
+OBJECTS=display-text.o
 BINARIES=led-matrix display-text
-ALL_BINARIES=$(BINARIES) led-image-viewer
+ALL_BINARIES=$(BINARIES)
 
 # Where our library resides. It is split between includes and the binary
 # library in lib
@@ -28,14 +28,8 @@ led-matrix : demo-main.o $(RGB_LIBRARY)
 display-text : display-text.o $(RGB_LIBRARY)
 	$(CXX) $(CXXFLAGS) display-text.o -o $@ $(LDFLAGS)
 
-led-image-viewer: led-image-viewer.o $(RGB_LIBRARY)
-	$(CXX) $(CXXFLAGS) led-image-viewer.o -o $@ $(LDFLAGS) $(MAGICK_LDFLAGS)
-
 %.o : %.cc
 	$(CXX) -I$(RGB_INCDIR) $(CXXFLAGS) -c -o $@ $<
-
-led-image-viewer.o : led-image-viewer.cc
-	$(CXX) -I$(RGB_INCDIR) $(CXXFLAGS) $(MAGICK_CXXFLAGS) -c -o $@ $<
 
 clean:
 	rm -f $(OBJECTS) $(ALL_BINARIES)
