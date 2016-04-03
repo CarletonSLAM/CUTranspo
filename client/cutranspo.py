@@ -50,7 +50,7 @@ try:
 	print "Destination: " + destination
 	print "Times: " + times
 except (ValueError, KeyError, TypeError):
-    print "JSON format error"
+	print "JSON format error"
 
 
 s.enter(10, 1, getNextTimes, (s,))
@@ -61,4 +61,4 @@ stream = os.popen(" ".join("sudo ./test2", "255,0,255", "60", "4",destination, t
 time.sleep(5);
 rc = stream.close()
 if rc is not None and rc >> 8:
-    print "There were some errors"
+	print "There were some errors"
