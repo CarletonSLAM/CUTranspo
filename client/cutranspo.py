@@ -13,7 +13,7 @@ password = '1234'
 s = sched.scheduler(time.time, time.sleep)
 
 try:
-	url = 'http://172.17.98.162:3000/api/Devices'
+	url = 'https://cu-transpo.herokuapp.com/api/Devices'
 	values = {'deviceName' : deviceName,'password' : password, 'stopNo' : '5813'}
 	data = urllib.urlencode(values)
 	req = urllib2.Request(url, data)
@@ -25,7 +25,7 @@ except urllib2.HTTPError:
 
 def getNextTimes(sc):
 	try:
-		url = 'http://172.17.98.162:3000/api/Devices/login'
+		url = 'https://cu-transpo.herokuapp.com/api/Devices/login'
 		values = {'deviceName' : deviceName,'password' : password}
 		data = urllib.urlencode(values)
 		req = urllib2.Request(url, data)
@@ -40,7 +40,7 @@ def getNextTimes(sc):
 
 	query = urllib.urlencode({"access_token" : access_token})
 
-	req_for_bus_timing = urllib2.Request('http://172.17.98.162:3000/api/Devices/getTimes?' + query)
+	req_for_bus_timing = urllib2.Request('https://cu-transpo.herokuapp.com/api/Devices/getTimes?' + query)
 	bus_timings_response = urllib2.urlopen(req_for_bus_timing)
 	try:
 		decoded = json.loads(bus_timings_response.read())
@@ -55,7 +55,7 @@ def getNextTimes(sc):
 
 s.enter(10, 1, getNextTimes, (s,))
 s.run()
-stream = os.popen(" ".join("sudo ./test2", "255,0,255", "60", "4",destination, times[0] + "   " + times[1] + "   " + times[2]]),"w")
+stream = os.popen(" ".join("sudo ./test2", "255,0,255", "60", "4",destination, times[0] + "   " + times[1] + "   " + times[2]),"w")
 
 
 time.sleep(5);
