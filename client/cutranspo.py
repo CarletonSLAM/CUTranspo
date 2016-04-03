@@ -4,6 +4,7 @@ import json
 from pprint import pprint
 import sched, time
 from subprocess import call
+import os
 
 # deviceName = 'rpi'
 # password = '1234'
@@ -62,5 +63,7 @@ from subprocess import call
 
 # s.enter(10, 1, getNextTimes, (s,))
 # s.run()
-call(["./test2", "255,0,255", "60", "4   " + "Rideau", "5:10   5:15:   5:20"])
+#call(["./test2", "255,0,255", "60", "4   " + "Rideau", "5:10   5:15   5:20"])
 #call(["./test2", "255,0,255", "60", "4    " + destination, times[0] + "   " + times[1] + "   " + times[2]])
+
+stream = os.popen("./test2", "255,0,255", "60", "4   " + "Rideau", "5:10   5:15   5:20")
