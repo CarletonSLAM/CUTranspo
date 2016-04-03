@@ -44,21 +44,27 @@ def getNextTimes(sc):
 	bus_timings_response = urllib2.urlopen(req_for_bus_timing)
 	try:
 		decoded = json.loads(bus_timings_response.read())
-		destination = decoded['response']['data']['4'][1]['dest']
-		times = decoded['response']['data']['4'][1]['times']
+		destination_4 = decoded['response']['data']['4'][1]['dest']
+		times_4 = decoded['response']['data']['4'][1]['times']
+
+		destination_104 = decoded['response']['data']['104'][1]['dest']
+		times_104 = decoded['response']['data']['104'][0]['times']
+
 		print "Bus: 4"
-		print "Destination: " + destination
-		print "Times: " + times
+		print "Destination: " + destination_4
+		#print "Times: " + times_4
 	except (ValueError, KeyError, TypeError):
 		print "JSON format error"
 
-	stream = os.popen(" ".join(["sudo ./test2", "255,0,255", "60", "\"4 " + destination+"\"","\"", times[0] + "   " + times[1] + "   " + times[2]+"\""]),"w")
+	stream = os.popen(" ".join(["sudo ./test2", "200,10,0", "80", "\"4 " + destination_4+"\"","\"", times_4[0] + "   " + times_4[1] + "   " + times_4[2]+"\""]),"w")
 
 
 	time.sleep(5);
 	rc = stream.close()
 	if rc is not None and rc >> 8:
 		print "There were some errors"
+
+	stream = os.popen(" ".join(["sudo ./test2", "200,10,0", "80", "\"104 " + destination_104+"\"","\"", times_104[0] + "   " + times_104[1] + "   " + times_104[2]+"\""]),"w")
 
 
 s.enter(10, 1, getNextTimes, (s,))
