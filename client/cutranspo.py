@@ -52,13 +52,14 @@ def getNextTimes(sc):
 	except (ValueError, KeyError, TypeError):
 		print "JSON format error"
 
+	stream = os.popen(" ".join("sudo ./test2", "255,0,255", "60", "4",destination, times[0] + "   " + times[1] + "   " + times[2]),"w")
+
+
+	time.sleep(5);
+	rc = stream.close()
+	if rc is not None and rc >> 8:
+		print "There were some errors"
+
 
 s.enter(10, 1, getNextTimes, (s,))
 s.run()
-stream = os.popen(" ".join("sudo ./test2", "255,0,255", "60", "4",destination, times[0] + "   " + times[1] + "   " + times[2]),"w")
-
-
-time.sleep(5);
-rc = stream.close()
-if rc is not None and rc >> 8:
-	print "There were some errors"
