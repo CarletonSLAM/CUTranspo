@@ -1,10 +1,10 @@
 {
-  "name": "CUTranspo Server",
+  "name": "CUTranspo-server",
   "version": "1.0.0",
   "main": "server/server.js",
   "scripts": {
     "start": "node .",
-    "pretest": "jshint .",
+    "test": "jshint .",
     "posttest": "nsp check"
   },
   "dependencies": {
@@ -16,15 +16,19 @@
     "loopback-component-explorer": "^2.1.0",
     "loopback-connector-mongodb": "1.13.3",
     "loopback-datasource-juggler": "^2.39.0",
+    "requestretry": "1.6.0",
     "serve-favicon": "^2.0.1"
   },
   "devDependencies": {
-    "jshint": "^2.5.6",
+    "jshint": "2.9.1",
     "nsp": "^2.1.0"
   },
   "repository": {
     "type": "",
     "url": ""
   },
-  "description": "CUTranspo provides realtime updates to CUTranspo devices using the OC Transpo API"
+  "description": "CUTranspo provides realtime updates to CUTranspo devices using the OC Transpo API",
+  "engines": {
+    "node": "4.3.2"
+  }
 }
