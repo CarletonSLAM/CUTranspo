@@ -24,33 +24,33 @@ except urllib2.HTTPError:
 	print "Already Registered"
 
 def getNextTimes(sc):
-try:
-	url = 'http://172.17.98.162:3000/api/Devices/login'
-	values = {'deviceName' : deviceName,'password' : password}
-	data = urllib.urlencode(values)
-	req = urllib2.Request(url, data)
-	print req
-	response = urllib2.urlopen(req)
-	#response.read()
-	decoded = json.loads(response.read())
-	access_token = decoded['id']
-	print "Access Token: ", decoded['id']
-except urllib2.HTTPError:
-	print "Login failed"
+	try:
+		url = 'http://172.17.98.162:3000/api/Devices/login'
+		values = {'deviceName' : deviceName,'password' : password}
+		data = urllib.urlencode(values)
+		req = urllib2.Request(url, data)
+		print req
+		response = urllib2.urlopen(req)
+		#response.read()
+		decoded = json.loads(response.read())
+		access_token = decoded['id']
+		print "Access Token: ", decoded['id']
+	except urllib2.HTTPError:
+		print "Login failed"
 
-query = urllib.urlencode({"access_token" : access_token})
+	query = urllib.urlencode({"access_token" : access_token})
 
-req_for_bus_timing = urllib2.Request('http://172.17.98.162:3000/api/Devices/getTimes?' + query)
-bus_timings_response = urllib2.urlopen(req_for_bus_timing)
-try:
-	decoded = json.loads(bus_timings_response.read())
-	destination = decoded['response']['data']['4'][1]['dest']
-	times = decoded['response']['data']['4'][1]['times']
-	print "Bus: 4"
-	print "Destination: " + destination
-	print "Times: " + times
-except (ValueError, KeyError, TypeError):
-	print "JSON format error"
+	req_for_bus_timing = urllib2.Request('http://172.17.98.162:3000/api/Devices/getTimes?' + query)
+	bus_timings_response = urllib2.urlopen(req_for_bus_timing)
+	try:
+		decoded = json.loads(bus_timings_response.read())
+		destination = decoded['response']['data']['4'][1]['dest']
+		times = decoded['response']['data']['4'][1]['times']
+		print "Bus: 4"
+		print "Destination: " + destination
+		print "Times: " + times
+	except (ValueError, KeyError, TypeError):
+		print "JSON format error"
 
 
 s.enter(10, 1, getNextTimes, (s,))
