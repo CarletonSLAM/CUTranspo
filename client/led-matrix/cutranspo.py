@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 import urllib
 import urllib2
 import json
@@ -46,17 +45,22 @@ def getNextTimes(sc):
 	bus_timings_response = urllib2.urlopen(req_for_bus_timing)
 	try:
 		decoded = json.loads(bus_timings_response.read())
-		destination_4 = decoded['response']['data']['4'][1]['dest']
-		times_4 = decoded['response']['data']['4'][1]['times']
 
-		destination_104 = decoded['response']['data']['104'][0]['dest']
-		times_104 = decoded['response']['data']['104'][0]['times']
+		li = []
 
-		print "Bus: 4"
-		print "Destination: " + destination_4
-		#print "Times: " + times_4
-		print "Bus: 104"
-		print "Desination: " + destination_104
+		for i in decoded['response']['data']:
+			li.append(i)
+
+		for i in li:
+			print i + "   " + decoded['response']['data'][i][1]['dest']
+			print decoded['response']['data'][i][1]['times']
+
+		# destination_4 = decoded['response']['data']['4'][1]['dest']
+		# times_4 = decoded['response']['data']['4'][1]['times']
+
+		# destination_104 = decoded['response']['data']['104'][0]['dest']
+		# times_104 = decoded['response']['data']['104'][0]['times']
+		
 	except (ValueError, KeyError, TypeError):
 		print "JSON format error"
 
@@ -65,8 +69,6 @@ def getNextTimes(sc):
 	
 	time.sleep(5);
 	print stream.terminate()
-	#if rc is not None and rc >> 8:
-	#	print "There were some errors"
 		
 	stream = Popen(["sudo", PROGRAM_PATH, "200,10,0", "80", "104 " + destination_104, times_104[0] + "  " + times_104[1]], stdin=PIPE, stderr=PIPE, universal_newlines=True)
 	time.sleep(5)
