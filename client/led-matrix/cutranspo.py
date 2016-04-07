@@ -52,14 +52,12 @@ def getNextTimes(sc):
 			li.append(i)
 
 		for i in li:
-			print i + "   " + decoded['response']['data'][i][1]['dest']
-			print decoded['response']['data'][i][1]['times']
-
-		# destination_4 = decoded['response']['data']['4'][1]['dest']
-		# times_4 = decoded['response']['data']['4'][1]['times']
-
-		# destination_104 = decoded['response']['data']['104'][0]['dest']
-		# times_104 = decoded['response']['data']['104'][0]['times']
+			if len(decoded['response']['data'][i][0]['times']) > 0:
+				print i + "   " + decoded['response']['data'][i][0]['dest']
+				print decoded['response']['data'][i][0]['times']
+			else:
+				print i + "   " + decoded['response']['data'][i][1]['dest']
+				print decoded['response']['data'][i][1]['times']
 		
 	except (ValueError, KeyError, TypeError):
 		print "JSON format error"
