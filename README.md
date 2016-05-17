@@ -11,6 +11,8 @@ Displays the next 2 timings for the bus routes at the main Carleton University b
 
 The production server hosted on https://cu-transpo.herokuapp.com uses the OC Transpo API to pass the times that a bus with come to a particular bus top. The bus stop is given when registering the device.
 
+Visit https://vimeo.com/166373294 for our demo video.
+
 #### Registerting Device:
  ..* POST https://cu-transpo.herokuapp.com/api/Devices  
  ..* body {deviceName:'device', 'stopNo':1234, password: 'pw'}
