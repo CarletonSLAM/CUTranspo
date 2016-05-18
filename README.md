@@ -26,7 +26,7 @@ Visit https://vimeo.com/166373294 for our demo video.
   ..* GET https://cu-transpo.herokuapp.com/api/Devices/getTimes
 
 ## How we built it
-Node.js for the server, Python for the client, OC Transpo API to pull in information about the next 2 timings for each bus, adapted some guy’s API to output text onto the LED board.
+Node.js for the server, Python for the client, OC Transpo API to pull in information about the next 2 timings for each bus, adapted hzeller's [rpi-rgb-led-matrix](https://github.com/hzeller/rpi-rgb-led-matrix/) API to output text onto the LED board.
 
 ## Challenges we ran into
 * Being able to connect to the Raspberry Pi on a local network.
