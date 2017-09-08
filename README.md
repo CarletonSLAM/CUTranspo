@@ -9,21 +9,24 @@ Waiting for buses is a pain without knowing when they will show up.
 ## What it does
 Displays the next 2 timings for the bus routes at the main Carleton University bus stop.
 
-The production server hosted on https://cu-transpo.herokuapp.com uses the OC Transpo API to pass the times that a bus with come to a particular bus top. The bus stop is given when registering the device.
+The production server hosted on <https://cu-transpo.herokuapp.com> uses the OC Transpo API to pass the times that a bus with come to a particular bus top. The bus stop is given when registering the device.
 
-Visit https://vimeo.com/166373294 for our demo video.
+Visit <https://vimeo.com/166373294> for our demo video.
 
 #### Registerting Device:
- ..* POST https://cu-transpo.herokuapp.com/api/Devices  
- ..* body {deviceName:'device', 'stopNo':1234, password: 'pw'}
-
+```curl
+POST https://cu-transpo.herokuapp.com/api/Devices  -d {deviceName:'device', 'stopNo':1234, password: 'pw'}
+```
 
 #### Login Device:
-..* POST https://cu-transpo.herokuapp.com/api/Devices/login
-..* body {deviceName:'device', password: 'pw'}
+```curl
+POST https://cu-transpo.herokuapp.com/api/Devices/login -d {deviceName:'device', password: 'pw'}
+```
 
 #### Getting Bus Times:
-  ..* GET https://cu-transpo.herokuapp.com/api/Devices/getTimes
+```curl
+GET https://cu-transpo.herokuapp.com/api/Devices/getTimes
+```
 
 ## How we built it
 Node.js for the server, Python for the client, OC Transpo API to pull in information about the next 2 timings for each bus, adapted hzeller's [rpi-rgb-led-matrix](https://github.com/hzeller/rpi-rgb-led-matrix/) API to output text onto the LED board.
